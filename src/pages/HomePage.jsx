@@ -1,80 +1,189 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   ArrowDownRight,
   ArrowRight,
-  Check,
-  ChevronRight,
-  MessagesSquare,
+  CheckCircle2,
+  Clock,
+  Globe,
   ShieldCheck,
-  Sparkles,
-  UserRound,
-  Users,
+  Smartphone,
+  User,
+  Zap,
 } from 'lucide-react';
 import { Button } from '../components/shared/Button';
+import { PhilosophyTransformation } from '../components/home/PhilosophyTransformation';
+import { IndustryShowroom } from '../components/home/IndustryShowroom';
+import { ConversationalConcierge } from '../components/home/ConversationalConcierge';
+import { SystemFrontDoor } from '../components/home/SystemFrontDoor';
+import { CustomerJourneyStory } from '../components/home/CustomerJourneyStory';
+import { TwelveStoneMethod } from '../components/home/TwelveStoneMethod';
+import { SnapshotReport } from '../components/home/SnapshotReport';
 import '../styles/HomePage.css';
 
-const industryPreviewData = [
-  { title: 'Home Services', slug: 'home-services', accent: 'gold', description: 'Urgency, fast action, service response, and repeat work.' },
-  { title: 'Professional Services', slug: 'professional-services', accent: 'navy', description: 'Authority, trust, process clarity, and consultation flow.' },
-  { title: 'Healthcare & Wellness', slug: 'healthcare-wellness', accent: 'sage', description: 'Trust, appointment clarity, and patient communication.' },
-  { title: 'Financial & Insurance', slug: 'financial-insurance', accent: 'sand', description: 'Education, nurture, and long-term relationship management.' },
-  { title: 'Beauty & Aesthetics', slug: 'beauty-aesthetics', accent: 'rose', description: 'Visual proof, booking, and rebooking momentum.' },
-  { title: 'Construction & B2B', slug: 'construction-b2b', accent: 'steel', description: 'Capability, projects, qualification, and follow-up.' },
+const SYSTEM_MOMENTS = [
+  { id: 'inquiry', label: 'INQUIRY CAPTURED', icon: Zap, stepIndex: 1, chipPos: 'top-right' },
+  { id: 'response', label: 'RESPONSE SENT', icon: CheckCircle2, stepIndex: 2, chipPos: 'mid-right' },
+  { id: 'followup', label: 'FOLLOW-UP ACTIVE', icon: Clock, stepIndex: 3, chipPos: 'bottom-right' },
 ];
-
-const customerStages = ['ATTRACT', 'ENGAGE', 'CONVERT', 'SERVE', 'RETAIN', 'EVANGELIZE™'];
-const businessFlow = ['GET FOUND', 'CONTACT', 'RESPOND', 'FOLLOW UP', 'CUSTOMER', 'RETAIN', 'EVANGELIZE™'];
-const employeeFlow = ['ONBOARD', 'COMMUNICATE', 'ENGAGE', 'SUPPORT', 'RETAIN'];
-const customerSystemCapabilities = ['Smart Websites™', 'Lead capture', '24/7 communication', 'AI-enabled conversations', 'CRM', 'Pipelines', 'Scheduling', 'Automated follow-up', 'Reputation', 'Customer retention', 'Reactivation', 'Evangelize™'];
-const employeeSystemCapabilities = ['Onboarding communication', 'Internal communication', 'Employee engagement', 'Information & resources', 'Automated touchpoints', 'Recognition check-ins', 'Retention communication', 'Employee support'];
 
 const Reveal = ({ children, className = '' }) => (
   <div className={`home-reveal ${className}`}>{children}</div>
 );
 
-const SmartSystemVisual = () => (
-  <div className="smart-system-visual" aria-label="Connected customer and employee system diagram">
-    <div className="browser-shell">
-      <div className="browser-toolbar">
-        <span />
-        <span />
-        <span />
+const SmartSystemVisual = () => {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 3600);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="smart-system-visual" aria-label="12 Stone Smart Website System Concept Visualizer">
+      {/* Gold Pathway Connecting Devices to System Moments */}
+      <div className="system-pathways-bg">
+        <svg className="pathway-svg" viewBox="0 0 580 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M 380 180 Q 440 160, 470 125"
+            className={`pathway-line ${activeStep >= 1 ? 'is-active' : ''}`}
+          />
+          <path
+            d="M 410 260 Q 450 240, 480 230"
+            className={`pathway-line ${activeStep >= 2 ? 'is-active' : ''}`}
+          />
+          <path
+            d="M 400 350 Q 460 350, 480 340"
+            className={`pathway-line ${activeStep >= 3 ? 'is-active' : ''}`}
+          />
+        </svg>
       </div>
-      <div className="browser-content">
-        <div className="browser-panel browser-panel-main">
-          <div className="panel-label">Website</div>
-          <div className="browser-lines">
-            <i />
-            <i />
-            <i />
-            <i />
+
+      {/* Human Business Avatar Frame */}
+      <div className="hero-human-badge">
+        <div className="human-avatar-circle">
+          <User size={16} />
+        </div>
+        <div className="human-details">
+          <strong className="human-name">Marcus R. • Lead Service Tech</strong>
+          <span className="human-company">Coastal Heating & Cooling</span>
+        </div>
+        <div className="human-status">SYSTEM ACTIVE</div>
+      </div>
+
+      {/* DOMINANT FEATURE #1: Smart Website™ Browser */}
+      <div className="browser-shell">
+        <div className="browser-toolbar">
+          <div className="window-dots">
+            <span className="dot dot-close" />
+            <span className="dot dot-min" />
+            <span className="dot dot-expand" />
+          </div>
+          <div className="url-bar">
+            <Globe size={11} className="url-icon" />
+            <span>12stoneconcept.com/home-services</span>
+          </div>
+          <div className="security-badge">
+            SMART WEBSITE™ • HOME SERVICES CONCEPT
           </div>
         </div>
-        <div className="browser-panel browser-panel-side">
-          <div className="panel-label">Inquiry</div>
-          <div className="mini-chip">NEW INQUIRY<br />CAPTURED</div>
+
+        <div className="browser-viewport">
+          <div className="site-header">
+            <div className="site-logo">
+              <span className="logo-mark">H</span>
+              <span className="logo-name">HOME SERVICES</span>
+            </div>
+            <div className="site-nav-links">
+              <span>Services</span>
+              <span>Coverage</span>
+              <span>Contact</span>
+            </div>
+            <div className="site-cta-btn">Request Service</div>
+          </div>
+
+          <div className="site-hero">
+            <div className="site-hero-copy">
+              <span className="concept-tag">COMMERCIAL & RESIDENTIAL</span>
+              <h3 className="site-headline">YOUR HOME.<br />TAKEN CARE OF.</h3>
+              <p className="site-subtext">Professional service when you need it.</p>
+              <div className="site-hero-actions">
+                <div className="site-primary-btn">
+                  REQUEST SERVICE
+                </div>
+              </div>
+            </div>
+
+            <div className="site-service-grid">
+              <div className="site-service-item">
+                <ShieldCheck size={13} className="item-icon" />
+                <span>Heating & Cooling</span>
+              </div>
+              <div className="site-service-item">
+                <Clock size={13} className="item-icon" />
+                <span>Plumbing & Water</span>
+              </div>
+              <div className="site-service-item">
+                <Zap size={13} className="item-icon" />
+                <span>Electrical & Safety</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="phone-shell">
-      <div className="phone-notch" />
-      <div className="phone-screen">
-        <span>FOLLOW-UP</span>
-        <strong>ACTIVE</strong>
+
+      {/* FEATURE #2: Overlapping Mobile Customer Interaction */}
+      <div className="phone-shell">
+        <div className="phone-notch" />
+        <div className="phone-top-bar">
+          <span className="phone-time">9:41</span>
+          <Smartphone size={10} />
+        </div>
+
+        <div className="phone-screen">
+          <div className="phone-app-header">
+            <span className="app-badge">CONNECTED SYSTEM</span>
+            <span className="app-title">Customer Interaction</span>
+          </div>
+
+          <div className="phone-chat-thread">
+            <div className="chat-bubble incoming">
+              <span className="sender">Customer</span>
+              <p>"Hi, I need someone to look at my AC."</p>
+            </div>
+
+            <div className={`chat-bubble outgoing ${activeStep >= 2 ? 'pulse-gold' : ''}`}>
+              <span className="sender">Smart System</span>
+              <p>"Absolutely. I can help you request service."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FEATURE #3: Three Sequential System Moments */}
+      <div className="status-nodes-container">
+        {SYSTEM_MOMENTS.map((moment) => {
+          const IconComp = moment.icon;
+          const isActive = activeStep >= moment.stepIndex;
+          return (
+            <div
+              key={moment.id}
+              className={`system-status-chip chip-${moment.chipPos} ${isActive ? 'is-active' : ''}`}
+            >
+              <div className="chip-icon-wrap">
+                <IconComp size={12} />
+              </div>
+              <span className="chip-label">{moment.label}</span>
+              {isActive && <span className="chip-pulse-ring" />}
+            </div>
+          );
+        })}
       </div>
     </div>
-    <div className="status-thread status-thread-top">
-      <span>APPOINTMENT REQUEST<br />RECEIVED</span>
-    </div>
-    <div className="status-thread status-thread-mid">
-      <span>MISS CALL<br />RESPONSE SENT</span>
-    </div>
-    <div className="status-thread status-thread-bottom">
-      <span>CUSTOMER<br />NURTURE ACTIVE</span>
-    </div>
-  </div>
-);
+  );
+};
 
 export const HomePage = () => {
   const { hash } = useLocation();
@@ -102,17 +211,29 @@ export const HomePage = () => {
 
   return (
     <div className="homepage">
+      {/* 1. HERO — COMPETE BIGGER */}
       <section className="home-hero">
         <div className="container hero-layout">
           <Reveal className="hero-copy">
-            <span className="home-eyebrow"><span className="eyebrow-rule" /> 12 Stone Consulting <span className="eyebrow-divider">•</span> Custom Business Systems</span>
+            <span className="home-eyebrow">
+              <span className="eyebrow-rule" /> 12 Stone Consulting <span className="eyebrow-divider">•</span> Custom Business Systems
+            </span>
             <h1>
-              YOU DON'T NEED A BIG COMPANY<br />
-              <em>TO COMPETE LIKE ONE.</em>
+              YOU DON'T NEED<br />
+              TO BE A BIG<br />
+              COMPANY<br />
+              <em className="gold-accent">TO COMPETE<br />LIKE ONE.</em>
             </h1>
+
+            <div className="hero-pattern-statement">
+              <span className="pattern-line">YOUR WEBSITE SHOULD DO MORE THAN LOOK GOOD.</span>
+              <strong className="pattern-bold gold-accent">IT SHOULD DO BUSINESS.</strong>
+            </div>
+
             <p className="hero-lede">
-              12 Stone designs custom customer and employee systems that give small businesses capabilities once associated with much larger companies.
+              12 Stone Smart Website Systems™ connect your website with the customer systems behind it—helping you capture opportunities, communicate, follow up, automate and build stronger customer relationships.
             </p>
+
             <div className="hero-actions">
               <Button to="/smart-websites" variant="brass" icon={ArrowRight}>SEE WHAT'S POSSIBLE</Button>
               <Button to="/business-snapshot" variant="outline">GET YOUR BUSINESS SNAPSHOT™</Button>
@@ -126,194 +247,104 @@ export const HomePage = () => {
         <div className="hero-scroll-cue"><ArrowDownRight size={17} /> <span>Start here</span></div>
       </section>
 
-      <section className="philosophy-section section-padding">
+      {/* 2. CONVERSATIONAL CONCIERGE™ */}
+      <section className="concierge-section section-padding dark-section">
+        <div className="container">
+          <Reveal>
+            <ConversationalConcierge />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 3. SMART WEBSITE™ — SHOW THE PRODUCT */}
+      <section className="philosophy-section section-padding light-section">
         <div className="container philosophy-layout">
           <Reveal className="philosophy-copy">
-            <span className="home-eyebrow">WE DON'T PUT YOUR BUSINESS IN A WEBSITE.</span>
-            <h2>
-              WE BUILD THE WEBSITE<br />
-              <em>AROUND YOUR BUSINESS.</em>
+            <span className="home-eyebrow">
+              <span className="eyebrow-rule" /> SMART WEBSITE™ PHILOSOPHY
+            </span>
+            <h2 className="philosophy-headline">
+              WE DON'T PUT<br />
+              YOUR BUSINESS<br />
+              IN A WEBSITE.<br />
+              <br />
+              WE BUILD THE<br />
+              <span className="gold-accent">WEBSITE AROUND<br />YOUR BUSINESS.</span>
             </h2>
-            <p>
-              A 12 Stone Smart Website™ begins with the business, its customers and the way those customers actually move through the company.
+            <p className="philosophy-lede">
+              Before we design a page, we understand the business behind it—your customers, their journey and what needs to happen next.
             </p>
-            <div className="journey-rail" aria-label="Business to smart website journey">
-              <span>YOUR BUSINESS</span>
-              <ArrowDownRight size={18} />
-              <span>YOUR CUSTOMER</span>
-              <ArrowDownRight size={18} />
-              <span>CUSTOMER JOURNEY</span>
-              <ArrowDownRight size={18} />
-              <span>CUSTOM SYSTEM</span>
-              <ArrowDownRight size={18} />
-              <span>SMART WEBSITE™</span>
+            <div className="philosophy-actions">
+              <Button to="/how-we-think" variant="brass" icon={ArrowRight}>
+                SEE HOW WE THINK
+              </Button>
             </div>
-            <Button to="/how-we-think" variant="brass" icon={ArrowRight}>SEE HOW WE THINK</Button>
           </Reveal>
 
-          <Reveal className="philosophy-panel">
-            <div className="panel-grid-2">
-              <div className="mini-visual-card">
-                <div className="mini-icon"><Users size={18} /></div>
-                <span>Customer journey</span>
-              </div>
-              <div className="mini-visual-card highlight-card">
-                <div className="mini-icon"><Sparkles size={18} /></div>
-                <span>Smart system</span>
-              </div>
-              <div className="mini-visual-card dark-card">
-                <div className="mini-icon"><MessagesSquare size={18} /></div>
-                <span>Response + follow-up</span>
-              </div>
-              <div className="mini-visual-card dark-card">
-                <div className="mini-icon"><ShieldCheck size={18} /></div>
-                <span>Trust + retention</span>
-              </div>
-            </div>
+          <Reveal className="philosophy-visual-wrap">
+            <PhilosophyTransformation />
           </Reveal>
         </div>
       </section>
 
-      <section className="showcase-section section-padding">
+      {/* 4. BUILT AROUND YOUR BUSINESS — INDUSTRY SHOWROOM */}
+      <section className="showcase-section section-padding dark-section">
         <div className="container">
-          <Reveal className="section-heading-wrap showcase-heading">
-            <span className="home-eyebrow">SMART WEBSITE™ SHOWCASE</span>
-            <h2>WE DON'T BUILD THE SAME WEBSITE SIX TIMES.</h2>
-            <p className="emphasis-line">SEE WHAT CUSTOM LOOKS LIKE.</p>
-            <p>Different businesses have different customers, workflows and goals. Explore how a 12 Stone Smart Website™ can be designed around the way each business actually works.</p>
-          </Reveal>
-
-          <div className="industry-grid">
-            {industryPreviewData.map(({ title, slug, accent, description }) => (
-              <Reveal key={slug} className={`industry-card accent-${accent}`}>
-                <Button to={`/portfolio/${slug}`} className="industry-link" variant="outline">
-                  <span className="industry-meta">{title}</span>
-                  <span className="industry-description">{description}</span>
-                  <span className="industry-arrow"><ArrowRight size={18} /></span>
-                </Button>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="lifecycle-section section-padding">
-        <div className="container lifecycle-layout">
-          <Reveal className="lifecycle-copy">
-            <span className="home-eyebrow">CUSTOMER LIFECYCLE</span>
-            <h2>WINNING THE CUSTOMER IS ONLY THE BEGINNING.</h2>
-          </Reveal>
-          <Reveal className="customer-lifecycle">
-            {customerStages.map((stage, index) => (
-              <React.Fragment key={stage}>
-                <div className="lifecycle-step">
-                  <span>{stage}</span>
-                </div>
-                {index < customerStages.length - 1 && <ChevronRight size={18} className="lifecycle-arrow" />}
-              </React.Fragment>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="understand-section section-padding">
-        <div className="container understand-layout">
-          <Reveal className="understand-copy">
-            <span className="home-eyebrow">HOW WE THINK</span>
-            <h2>BEFORE WE BUILD ANYTHING,<br /><em>WE UNDERSTAND YOUR BUSINESS.</em></h2>
-            <p>Technology comes second. Your business comes first.</p>
-            <Button to="/how-we-think" variant="brass" icon={ArrowRight}>EXPLORE HOW WE THINK</Button>
-          </Reveal>
-
-          <Reveal className="flow-panel">
-            <div className="flow-stack">
-              {businessFlow.map((step, index) => (
-                <React.Fragment key={step}>
-                  <div className="flow-pill">{step}</div>
-                  {index < businessFlow.length - 1 && <ArrowDownRight size={16} className="flow-divider" />}
-                </React.Fragment>
-              ))}
+          <Reveal className="showcase-header-wrap">
+            <span className="home-eyebrow">
+              <span className="eyebrow-rule" /> SMART WEBSITE™ SHOWCASE
+            </span>
+            <h2 className="showcase-primary-headline">
+              WE DON'T BUILD<br />
+              THE SAME WEBSITE<br />
+              <span className="gold-accent">SIX TIMES.</span>
+            </h2>
+            <div className="showcase-secondary-statement">
+              BECAUSE YOUR BUSINESS DOESN'T WORK LIKE EVERYONE ELSE'S.
             </div>
-            <div className="employee-flow">
-              <span className="employee-flow-label">EMPLOYEE PATHWAY</span>
-              {employeeFlow.map((step, index) => (
-                <React.Fragment key={step}>
-                  <div className="flow-pill muted">{step}</div>
-                  {index < employeeFlow.length - 1 && <ArrowDownRight size={16} className="flow-divider" />}
-                </React.Fragment>
-              ))}
-            </div>
+            <p className="showcase-subtext">
+              Different businesses need different customer journeys, experiences and systems.
+            </p>
+          </Reveal>
+
+          <Reveal className="showcase-showroom-wrap">
+            <IndustryShowroom />
           </Reveal>
         </div>
       </section>
 
-      <section className="workflow-section section-padding">
-        <div className="container workflow-layout">
-          <Reveal className="workflow-copy">
-            <span className="home-eyebrow">ILLUSTRATIVE WORKFLOW</span>
-            <h2>YOUR BUSINESS MAY CLOSE.<br /><em>THE CONVERSATION DOESN'T HAVE TO.</em></h2>
-          </Reveal>
-          <Reveal className="workflow-panel">
-            <div className="workflow-events">
-              <div className="workflow-row"><span>7:18 PM</span><strong>Website visitor</strong></div>
-              <div className="workflow-row"><span>7:19 PM</span><strong>Conversation begins</strong></div>
-              <div className="workflow-row"><span>7:21 PM</span><strong>Need captured</strong></div>
-              <div className="workflow-row"><span>7:23 PM</span><strong>Appointment request</strong></div>
-              <div className="workflow-row active"><span>FOLLOW-UP</span><strong>ACTIVE</strong></div>
-            </div>
+      {/* 5. THE WEBSITE IS ONLY THE FRONT DOOR */}
+      <section className="frontdoor-section section-padding light-section">
+        <div className="container">
+          <Reveal>
+            <SystemFrontDoor />
           </Reveal>
         </div>
       </section>
 
-      <section className="system-family-section section-padding">
-        <div className="container system-family-layout">
-          <Reveal className="system-family-copy">
-            <span className="home-eyebrow">CUSTOMER + EMPLOYEE SYSTEMS</span>
-            <h2>NOT EVERY BUSINESS NEEDS<br /><em>EVERY CAPABILITY.</em></h2>
-            <p>That's the point. We build around your business — not around a package.</p>
-          </Reveal>
-
-          <Reveal className="system-grid">
-            <div className="system-card customer-system">
-              <div className="system-card-header"><span>CUSTOMER SYSTEMS</span><UserRound size={18} /></div>
-              <ul>
-                {customerSystemCapabilities.map((item) => <li key={item}><Check size={16} />{item}</li>)}
-              </ul>
-            </div>
-            <div className="system-card employee-system">
-              <div className="system-card-header"><span>EMPLOYEE SYSTEMS</span><Users size={18} /></div>
-              <ul>
-                {employeeSystemCapabilities.map((item) => <li key={item}><Check size={16} />{item}</li>)}
-              </ul>
-            </div>
+      {/* 6. WINNING THE CUSTOMER IS ONLY THE BEGINNING — CUSTOMER JOURNEY */}
+      <section className="journey-section section-padding dark-section">
+        <div className="container">
+          <Reveal>
+            <CustomerJourneyStory />
           </Reveal>
         </div>
       </section>
 
-      <section className="methodology-section section-padding">
-        <div className="container methodology-layout">
-          <Reveal className="methodology-copy">
-            <span className="home-eyebrow">BUSINESS FIRST. TECHNOLOGY SECOND.</span>
-            <h2>DISCOVER → DESIGN → BUILD → CONNECT → OPTIMIZE</h2>
-            <p>We don't begin with software. We begin by understanding how your business gets customers, communicates, follows up, operates and maintains relationships. Then we determine what should be improved, automated or connected.</p>
+      {/* 7. HOW WE BUILD — 12 STONE METHOD */}
+      <section className="method-section section-padding light-section">
+        <div className="container">
+          <Reveal>
+            <TwelveStoneMethod />
           </Reveal>
         </div>
       </section>
 
-      <section id="business-snapshot" className="snapshot-section section-padding">
-        <div className="container snapshot-wrap">
-          <Reveal className="snapshot-header">
-            <span className="home-eyebrow">THE 12 STONE BUSINESS SNAPSHOT™</span>
-            <h2>HOW WELL IS YOUR BUSINESS<br /><em>BUILT TO COMPETE?</em></h2>
-          </Reveal>
-          <Reveal className="snapshot-pills">
-            {['DIGITAL PRESENCE', 'CUSTOMER RESPONSE', 'FOLLOW-UP', 'CUSTOMER RETENTION', 'EVANGELIZE™ / ONGOING NURTURE', 'BUSINESS AUTOMATION', 'EMPLOYEE ENGAGEMENT'].map((label) => (
-              <span key={label}>{label}</span>
-            ))}
-          </Reveal>
-          <Reveal className="snapshot-copy-row">
-            <p>See what's working, where capability gaps may exist, and what deserves attention first.</p>
-            <Button to="/business-snapshot" variant="brass" icon={ArrowRight}>GET MY BUSINESS SNAPSHOT™</Button>
+      {/* 8. WHAT COULD YOUR BUSINESS DO BETTER? — BUSINESS SNAPSHOT™ FINALE */}
+      <section className="snapshot-finale-section section-padding dark-section">
+        <div className="container">
+          <Reveal>
+            <SnapshotReport />
           </Reveal>
         </div>
       </section>
