@@ -1,0 +1,48 @@
+/* 
+  12 Stone AI Chatbot Placeholder Architecture
+  Mount Point styles prepared for future integration.
+  Currently kept dormant/hidden from public rendering per site specifications.
+*/
+
+.chatbot-mount-point {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  display: none; /* Hidden on public site until AI backend integration */
+}
+
+.chatbot-launcher-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-brass-dark), var(--color-brass));
+  color: #0D1117;
+  border: none;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-brass);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.chatbot-launcher-btn:hover {
+  transform: scale(1.05);
+}
+
+.chatbot-window-container {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 2rem;
+  width: 380px;
+  max-width: calc(100vw - 4rem);
+  height: 520px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
