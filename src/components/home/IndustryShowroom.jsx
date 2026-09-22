@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import {
   ArrowRight,
-  Clock,
   Globe,
+  MessageCircle,
   PhoneCall,
-  ShieldCheck,
-  Smartphone,
   Sparkles,
-  Zap,
 } from 'lucide-react';
 import { Button } from '../shared/Button';
 
@@ -93,125 +90,24 @@ export const IndustryShowroom = () => {
       {/* Main Digital Showroom Display Surface */}
       <div className="showroom-display-panel" id={`panel-${activeIndustry.id}`} role="tabpanel" aria-labelledby={`tab-${activeIndustry.id}`}>
         {activeIndustry.isFeatured ? (
-          /* FEATURED HOME SERVICES CONCEPT EXPERIENCE */
-          <div className="showroom-featured-concept">
-            <div className="concept-meta-header">
-              <span className="concept-credibility-tag">12 STONE INDUSTRY CONCEPT</span>
-              <span className="concept-industry-badge">HOME SERVICES</span>
+          <div className="showroom-featured-concept hs-showcase">
+            <div className="hs-concept-label">12 STONE INDUSTRY CONCEPT <span>HOME SERVICES</span></div>
+            <div className="hs-composition">
+              <div className="hs-browser">
+                <div className="hs-browser-chrome"><div className="window-dots"><span className="dot dot-close" /><span className="dot dot-min" /><span className="dot dot-expand" /></div><div className="hs-address"><Globe size={11} /> coastandcraft.com</div><span>SMART WEBSITE™</span></div>
+                <div className="hs-site">
+                  <nav className="hs-site-nav"><div className="hs-brand"><span>H</span><strong>HOME SERVICES</strong></div><div className="hs-menu"><span>SERVICES</span><span>SERVICE AREA</span><span>ABOUT</span><span>REVIEWS</span><span>CONTACT</span></div><div className="hs-nav-actions"><span className="hs-call"><PhoneCall size={13} /> CALL NOW</span><b>REQUEST SERVICE</b></div></nav>
+                  <section className="hs-hero"><div className="hs-hero-copy"><span className="hs-kicker">CARE FOR THE PLACE YOU CALL HOME</span><h3>YOUR HOME.<br /><em>TAKEN CARE OF.</em></h3><p>Professional service when you need it.</p><div className="hs-buttons"><b>REQUEST SERVICE <ArrowRight size={14} /></b><span><PhoneCall size={14} /> CALL NOW</span></div><small>Heating <i>•</i> Cooling <i>•</i> Plumbing <i>•</i> Electrical</small></div><div className="hs-image hs-hero-image"><span>HOME SERVICES HERO IMAGE</span><small>Technician + home + homeowner context</small></div></section>
+                  <section className="hs-services"><div className="hs-section-heading"><span>WHAT WE DO</span><h4>HOW CAN WE HELP?</h4></div><div className="hs-service-grid"><div className="hs-service"><div className="hs-image hs-heating"><span>HVAC SERVICE</span></div><strong>HEATING &amp; COOLING</strong><small>Comfort, maintenance, and repairs.</small></div><div className="hs-service"><div className="hs-image hs-plumbing"><span>PLUMBING SERVICE</span></div><strong>PLUMBING</strong><small>Thoughtful fixes for everyday living.</small></div><div className="hs-service"><div className="hs-image hs-electrical"><span>ELECTRICAL SERVICE</span></div><strong>ELECTRICAL</strong><small>Powering your home with care.</small></div></div></section>
+                  <section className="hs-trust"><div className="hs-image hs-trust-image"><span>TECHNICIAN + HOMEOWNER</span></div><div><span className="hs-kicker">SERVICE YOU CAN FEEL GOOD ABOUT</span><h4>Clear communication.<br />Professional service.</h4><p>From the first conversation to the final check, every step is designed to feel straightforward.</p><div className="hs-trust-points"><span>Convenient scheduling</span><span>Responsive support</span></div></div></section>
+                  <section className="hs-feedback"><div><span className="hs-kicker">CUSTOMER FEEDBACK</span><h4>WHAT CUSTOMERS<br />ARE SAYING</h4><p>A dedicated place for verified customer feedback when real reviews are ready to be shared.</p></div><div className="hs-feedback-placeholder"><span>REVIEW EXPERIENCE</span><small>Verified feedback can live here</small></div></section>
+                  <div className="hs-chat-entry"><MessageCircle size={18} /><div><strong>NEED HELP?</strong><span><i className="hs-online-dot" /> Talk with us. Available</span></div><ArrowRight size={15} /><div className="hs-chat-panel"><strong>HI! HOW CAN WE HELP TODAY?</strong><span>Heating &amp; Cooling</span><span>Plumbing</span><span>Electrical</span><span>Something Else</span><small>CUSTOMER: “My AC is running but not cooling.”</small><p>CONCIERGE: I can help you get a service request started.</p><b>REQUEST SERVICE <ArrowRight size={12} /></b></div></div>
+                </div>
+              </div>
+              <div className="hs-phone"><div className="hs-phone-speaker" /><div className="hs-mobile-site"><div className="hs-mobile-nav"><span>H</span><PhoneCall size={14} /></div><div className="hs-image hs-mobile-image"><span>HOME + TECHNICIAN</span></div><span className="hs-kicker">CARE FOR YOUR HOME</span><h4>YOUR HOME.<br /><em>TAKEN CARE OF.</em></h4><b className="hs-mobile-request">REQUEST SERVICE <ArrowRight size={13} /></b><div className="hs-mobile-links"><span><PhoneCall size={13} /> CALL NOW</span><span><MessageCircle size={13} /> NEED HELP?</span></div><div className="hs-mobile-services"><strong>SERVICES</strong><span>Heating &amp; Cooling</span><span>Plumbing</span><span>Electrical</span></div><div className="hs-review-moment"><span className="hs-kicker">SERVICE COMPLETE</span><p>Thanks for choosing us today.<br />We'd appreciate your feedback.</p><b>LEAVE A REVIEW <ArrowRight size={11} /></b><small>You choose whether and where to share.</small></div></div></div>
             </div>
-
-            {/* Main Visual Composition: Desktop Browser + Mobile Phone + System Pathway */}
-            <div className="concept-visual-surface">
-              {/* Dominant Desktop Smart Website™ Browser */}
-              <div className="showroom-browser-shell">
-                <div className="showroom-browser-toolbar">
-                  <div className="window-dots">
-                    <span className="dot dot-close" />
-                    <span className="dot dot-min" />
-                    <span className="dot dot-expand" />
-                  </div>
-                  <div className="url-bar">
-                    <Globe size={11} className="url-icon" />
-                    <span>12stoneconcept.com/home-services</span>
-                  </div>
-                  <span className="browser-badge">SMART WEBSITE™</span>
-                </div>
-
-                <div className="showroom-browser-viewport">
-                  {/* Website Nav */}
-                  <div className="concept-site-nav">
-                    <div className="site-brand">
-                      <span className="brand-mark">H</span>
-                      <span className="brand-title">HOME SERVICES</span>
-                    </div>
-                    <div className="site-menu">
-                      <span>Services</span>
-                      <span>Coverage</span>
-                      <span>Contact</span>
-                    </div>
-                    <div className="site-action-btn">REQUEST SERVICE</div>
-                  </div>
-
-                  {/* Concept Hero */}
-                  <div className="concept-hero-grid">
-                    <div className="concept-hero-left">
-                      <span className="urgency-badge">URGENT & EMERGENCY DISPATCH</span>
-                      <h3 className="concept-headline">
-                        WHEN SOMETHING GOES WRONG,<br />
-                        <em>GET HELP FAST.</em>
-                      </h3>
-                      <p className="concept-subtext">
-                        Licensed technicians on call. Immediate service request confirmation.
-                      </p>
-                      <div className="concept-btn-group">
-                        <div className="btn-primary-request">REQUEST SERVICE</div>
-                        <div className="btn-secondary-call">
-                          <PhoneCall size={12} />
-                          <span>CALL NOW</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Intentional Image Placeholder Architecture */}
-                    <div className="concept-image-architecture">
-                      <div className="image-placeholder-frame">
-                        <div className="frame-overlay-grid" />
-                        <div className="frame-content">
-                          <ShieldCheck size={28} className="placeholder-icon" />
-                          <span className="placeholder-label">SERVICE PROFESSIONAL PHOTOGRAPHY ARCHITECTURE</span>
-                          <span className="placeholder-sub">High-resolution technician & homeowner interaction frame</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Overlapping Secondary Mobile Experience */}
-              <div className="showroom-phone-shell">
-                <div className="phone-notch" />
-                <div className="phone-screen">
-                  <div className="phone-app-bar">
-                    <Smartphone size={10} />
-                    <span>12 STONE MOBILE</span>
-                  </div>
-                  <div className="phone-hero">
-                    <span>NEED SERVICE TODAY?</span>
-                    <strong>REQUEST SERVICE</strong>
-                    <div className="phone-cta-pill">Fast 2-Min Request</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Subtle Smart Website System™ Pathway (Tertiary Visual) */}
-              <div className="showroom-system-pathway">
-                <div className="pathway-step is-active">
-                  <span className="step-num">1</span>
-                  <span className="step-text">REQUEST SERVICE</span>
-                </div>
-                <span className="pathway-arrow">→</span>
-                <div className="pathway-step is-active">
-                  <Zap size={11} className="step-icon" />
-                  <span className="step-text">LEAD CAPTURED</span>
-                </div>
-                <span className="pathway-arrow">→</span>
-                <div className="pathway-step is-active">
-                  <Clock size={11} className="step-icon" />
-                  <span className="step-text">FOLLOW-UP READY</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Concept Footer Copy & Action */}
-            <div className="showroom-footer-row">
-              <div className="footer-copy-wrap">
-                <h3>{activeIndustry.title}</h3>
-                <p>{activeIndustry.description}</p>
-              </div>
-              <Button to={`/portfolio/${activeIndustry.slug}`} variant="brass" icon={ArrowRight}>
-                EXPLORE HOME SERVICES →
-              </Button>
-            </div>
+            <div className="hs-system-cues"><span>REQUEST SERVICE</span><b>→</b><span>SERVICE COMPLETED</span><b>→</b><span>REVIEW REQUEST SENT</span><b>→</b><span>RELATIONSHIP CONTINUES</span></div>
+            <div className="showroom-footer-row hs-showroom-footer"><div className="footer-copy-wrap"><h3>{activeIndustry.title}</h3><p>{activeIndustry.description}</p></div><Button to={`/portfolio/${activeIndustry.slug}`} variant="brass" icon={ArrowRight}>EXPLORE HOME SERVICES →</Button></div>
           </div>
         ) : (
           /* POLISHED CONCEPT DEVELOPMENT STATE FOR OTHER 5 INDUSTRIES */

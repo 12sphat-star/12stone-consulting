@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   ArrowDownRight,
   ArrowRight,
-  CheckCircle2,
-  Clock,
-  Globe,
-  ShieldCheck,
-  Smartphone,
-  User,
-  Zap,
+  MessageCircle,
 } from 'lucide-react';
 import { Button } from '../components/shared/Button';
 import { PhilosophyTransformation } from '../components/home/PhilosophyTransformation';
@@ -17,170 +11,25 @@ import { IndustryShowroom } from '../components/home/IndustryShowroom';
 import { ConversationalConcierge } from '../components/home/ConversationalConcierge';
 import { SystemFrontDoor } from '../components/home/SystemFrontDoor';
 import { CustomerJourneyStory } from '../components/home/CustomerJourneyStory';
+import { EmployeeSystemsExperience } from '../components/home/EmployeeSystemsExperience';
 import { TwelveStoneMethod } from '../components/home/TwelveStoneMethod';
 import { SnapshotReport } from '../components/home/SnapshotReport';
 import '../styles/HomePage.css';
-
-const SYSTEM_MOMENTS = [
-  { id: 'inquiry', label: 'INQUIRY CAPTURED', icon: Zap, stepIndex: 1, chipPos: 'top-right' },
-  { id: 'response', label: 'RESPONSE SENT', icon: CheckCircle2, stepIndex: 2, chipPos: 'mid-right' },
-  { id: 'followup', label: 'FOLLOW-UP ACTIVE', icon: Clock, stepIndex: 3, chipPos: 'bottom-right' },
-];
 
 const Reveal = ({ children, className = '' }) => (
   <div className={`home-reveal ${className}`}>{children}</div>
 );
 
 const SmartSystemVisual = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % 4);
-    }, 3600);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <div className="smart-system-visual" aria-label="12 Stone Smart Website System Concept Visualizer">
-      {/* Gold Pathway Connecting Devices to System Moments */}
-      <div className="system-pathways-bg">
-        <svg className="pathway-svg" viewBox="0 0 580 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M 380 180 Q 440 160, 470 125"
-            className={`pathway-line ${activeStep >= 1 ? 'is-active' : ''}`}
-          />
-          <path
-            d="M 410 260 Q 450 240, 480 230"
-            className={`pathway-line ${activeStep >= 2 ? 'is-active' : ''}`}
-          />
-          <path
-            d="M 400 350 Q 460 350, 480 340"
-            className={`pathway-line ${activeStep >= 3 ? 'is-active' : ''}`}
-          />
-        </svg>
+    <div className="hero-business-composition" aria-label="Business website and customer conversation concept">
+      <div className="hero-business-scene"><span>FINAL HERO BUSINESS PHOTOGRAPHY</span><small>Small-business professional + customer interaction + daylight</small></div>
+      <div className="hero-website-layer">
+        <div className="hero-website-nav"><strong><span>H</span> HOME SERVICES</strong><div><span>SERVICES</span><span>ABOUT</span><b>REQUEST SERVICE</b></div></div>
+        <div className="hero-website-body"><div><small>CARE FOR THE PLACE YOU CALL HOME</small><h3>YOUR HOME.<br /><em>TAKEN CARE OF.</em></h3><p>Professional service when you need it.</p><b>REQUEST SERVICE <ArrowRight size={12} /></b></div><div className="hero-website-image"><span>BUSINESS / SERVICE PHOTOGRAPHY</span></div></div>
       </div>
-
-      {/* Human Business Avatar Frame */}
-      <div className="hero-human-badge">
-        <div className="human-avatar-circle">
-          <User size={16} />
-        </div>
-        <div className="human-details">
-          <strong className="human-name">Marcus R. • Lead Service Tech</strong>
-          <span className="human-company">Coastal Heating & Cooling</span>
-        </div>
-        <div className="human-status">SYSTEM ACTIVE</div>
-      </div>
-
-      {/* DOMINANT FEATURE #1: Smart Website™ Browser */}
-      <div className="browser-shell">
-        <div className="browser-toolbar">
-          <div className="window-dots">
-            <span className="dot dot-close" />
-            <span className="dot dot-min" />
-            <span className="dot dot-expand" />
-          </div>
-          <div className="url-bar">
-            <Globe size={11} className="url-icon" />
-            <span>12stoneconcept.com/home-services</span>
-          </div>
-          <div className="security-badge">
-            SMART WEBSITE™ • HOME SERVICES CONCEPT
-          </div>
-        </div>
-
-        <div className="browser-viewport">
-          <div className="site-header">
-            <div className="site-logo">
-              <span className="logo-mark">H</span>
-              <span className="logo-name">HOME SERVICES</span>
-            </div>
-            <div className="site-nav-links">
-              <span>Services</span>
-              <span>Coverage</span>
-              <span>Contact</span>
-            </div>
-            <div className="site-cta-btn">Request Service</div>
-          </div>
-
-          <div className="site-hero">
-            <div className="site-hero-copy">
-              <span className="concept-tag">COMMERCIAL & RESIDENTIAL</span>
-              <h3 className="site-headline">YOUR HOME.<br />TAKEN CARE OF.</h3>
-              <p className="site-subtext">Professional service when you need it.</p>
-              <div className="site-hero-actions">
-                <div className="site-primary-btn">
-                  REQUEST SERVICE
-                </div>
-              </div>
-            </div>
-
-            <div className="site-service-grid">
-              <div className="site-service-item">
-                <ShieldCheck size={13} className="item-icon" />
-                <span>Heating & Cooling</span>
-              </div>
-              <div className="site-service-item">
-                <Clock size={13} className="item-icon" />
-                <span>Plumbing & Water</span>
-              </div>
-              <div className="site-service-item">
-                <Zap size={13} className="item-icon" />
-                <span>Electrical & Safety</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FEATURE #2: Overlapping Mobile Customer Interaction */}
-      <div className="phone-shell">
-        <div className="phone-notch" />
-        <div className="phone-top-bar">
-          <span className="phone-time">9:41</span>
-          <Smartphone size={10} />
-        </div>
-
-        <div className="phone-screen">
-          <div className="phone-app-header">
-            <span className="app-badge">CONNECTED SYSTEM</span>
-            <span className="app-title">Customer Interaction</span>
-          </div>
-
-          <div className="phone-chat-thread">
-            <div className="chat-bubble incoming">
-              <span className="sender">Customer</span>
-              <p>"Hi, I need someone to look at my AC."</p>
-            </div>
-
-            <div className={`chat-bubble outgoing ${activeStep >= 2 ? 'pulse-gold' : ''}`}>
-              <span className="sender">Smart System</span>
-              <p>"Absolutely. I can help you request service."</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FEATURE #3: Three Sequential System Moments */}
-      <div className="status-nodes-container">
-        {SYSTEM_MOMENTS.map((moment) => {
-          const IconComp = moment.icon;
-          const isActive = activeStep >= moment.stepIndex;
-          return (
-            <div
-              key={moment.id}
-              className={`system-status-chip chip-${moment.chipPos} ${isActive ? 'is-active' : ''}`}
-            >
-              <div className="chip-icon-wrap">
-                <IconComp size={12} />
-              </div>
-              <span className="chip-label">{moment.label}</span>
-              {isActive && <span className="chip-pulse-ring" />}
-            </div>
-          );
-        })}
-      </div>
+      <div className="hero-conversation-phone"><div className="hero-phone-speaker" /><div className="hero-phone-screen"><strong><MessageCircle size={13} /> CONVERSATIONAL CONCIERGE</strong><small>CUSTOMER</small><p>“My AC isn't cooling.”</p><small>CONVERSATIONAL CONCIERGE</small><p>“I can help you get a service request started.”</p><b>REQUEST SERVICE <ArrowRight size={11} /></b></div></div>
+      <div className="hero-gold-connection"><svg viewBox="0 0 360 80" preserveAspectRatio="none" aria-hidden="true"><path d="M 0 38 C 90 6, 155 68, 220 36 S 305 14, 360 36" /></svg><span>REQUEST CAPTURED <span aria-hidden="true">✓</span></span></div>
     </div>
   );
 };
@@ -331,7 +180,16 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* 7. HOW WE BUILD — 12 STONE METHOD */}
+      {/* 7. EMPLOYEE SYSTEMS — THE PEOPLE BEHIND THE BUSINESS */}
+      <section className="employee-systems-section section-padding light-section">
+        <div className="container">
+          <Reveal>
+            <EmployeeSystemsExperience />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 8. HOW WE BUILD — 12 STONE METHOD */}
       <section className="method-section section-padding light-section">
         <div className="container">
           <Reveal>
@@ -340,7 +198,7 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* 8. WHAT COULD YOUR BUSINESS DO BETTER? — BUSINESS SNAPSHOT™ FINALE */}
+      {/* 9. WHAT COULD YOUR BUSINESS DO BETTER? — BUSINESS SNAPSHOT™ FINALE */}
       <section className="snapshot-finale-section section-padding dark-section">
         <div className="container">
           <Reveal>

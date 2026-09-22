@@ -1,128 +1,55 @@
-import React, { useState } from 'react';
-import { Globe, ArrowRight, Zap, CheckCircle2, ShieldCheck, Database, Calendar, MessageSquare, PhoneCall, Star, RefreshCw, HeartHandshake, Layers } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, CalendarDays, Check, MessageCircle, RefreshCw } from 'lucide-react';
 import { Button } from '../shared/Button';
 
-const OUTCOME_CAPABILITIES = [
-  { id: 'lead-capture', outcome: 'INQUIRIES CAPTURED IMMEDIATELY', tech: 'Lead Capture', category: 'Attract & Engage', icon: Zap, description: 'Captures inquiries from website, phone, and chat instantly into your action pipeline.' },
-  { id: 'phone-comm', outcome: 'CUSTOMER GETTING AN ANSWER WHILE OWNER IS BUSY', tech: 'Voice Concierge', category: 'Conversational', icon: PhoneCall, description: 'After-hours voice concierge handles calls and routes urgent service needs.' },
-  { id: 'web-conversations', outcome: '24/7 ASSISTANCE ON YOUR FRONT DOOR', tech: 'Intelligent Web Chat', category: 'Conversational', icon: MessageSquare, description: 'Intelligent website conversation that answers questions and guides visitors to request service.' },
-  { id: 'crm-pipelines', outcome: 'CUSTOMER INFORMATION REMEMBERED', tech: 'CRM & Pipeline System', category: 'Operations', icon: Database, description: 'Stores every customer history, conversation context, and service record in one place.' },
-  { id: 'scheduling', outcome: 'SERVICE REQUESTS BOOKED DIRECTLY', tech: 'Direct Scheduling', category: 'Operations', icon: Calendar, description: 'Allows customers to request specific service windows aligned to technician availability.' },
-  { id: 'auto-followup', outcome: 'FOLLOW-UP HAPPENING WITHOUT OWNER CHASING IT', tech: 'Automated Follow-up', category: 'Response', icon: RefreshCw, description: 'Instant SMS and email follow-ups so prospective clients are never left waiting.' },
-  { id: 'messaging', outcome: 'SINGLE INBOX FOR ALL COMMUNICATIONS', tech: 'Unified Messaging', category: 'Response', icon: MessageSquare, description: 'Brings SMS, email, and web chat into one unified view for effortless team response.' },
-  { id: 'reputation', outcome: 'HAPPY CUSTOMER RECEIVING A REVIEW REQUEST', tech: 'Reputation Automation', category: 'Evangelize™', icon: Star, description: 'Automatically requests reviews from satisfied clients right after service delivery.' },
-  { id: 'nurture', outcome: 'PAST CUSTOMER RECEIVING A TIMELY SERVICE REMINDER', tech: 'Customer Nurture', category: 'Evangelize™', icon: HeartHandshake, description: 'Sends seasonal maintenance check-ins and care reminders so customers stay loyal.' },
-  { id: 'reactivation', outcome: 'PREVIOUS CLIENTS RE-ENGAGED AUTOMATICALLY', tech: 'Reactivation Engine', category: 'Evangelize™', icon: RefreshCw, description: 'Re-engages inactive accounts with relevant seasonal offers and tune-up reminders.' },
-  { id: 'retention', outcome: 'LONG-TERM CUSTOMER LOYALTY WORKFLOWS', tech: 'Retention Workflows', category: 'Evangelize™', icon: ShieldCheck, description: 'Keeps your business top of mind through regular post-service care and updates.' },
-  { id: 'evangelize', outcome: 'CUSTOMERS TURNING INTO REFERRAL SOURCES', tech: 'Evangelize™ System', category: 'Evangelize™', icon: Layers, description: 'Encourages satisfied clients to refer friends and colleagues with trackable sharing.' },
+const JOURNEY_STAGES = [
+  { id: 'visit', label: 'VISIT', title: 'Smart Website', detail: 'A clear first step for a customer who needs help.', icon: 'web' },
+  { id: 'conversation', label: 'CONVERSATION', title: 'A real answer, right away.', detail: '"My AC is not cooling."', icon: 'chat' },
+  { id: 'capture', label: 'REQUEST', title: 'The business remembers.', detail: 'Marcus R. | AC repair | Chesapeake', icon: 'person' },
+  { id: 'schedule', label: 'APPOINTMENT', title: 'A service moment takes shape.', detail: 'Tomorrow | 10:30 AM | AC service requested', icon: 'calendar' },
+  { id: 'service', label: 'SERVICE', title: 'Care arrives at the door.', detail: 'Technician + homeowner service experience', icon: 'image' },
+  { id: 'review', label: 'REVIEW', title: 'The relationship continues.', detail: 'Thanks for choosing us today. We would appreciate your feedback.', icon: 'review' },
+  { id: 'return', label: 'RETURN', title: 'Three months later.', detail: 'Seasonal maintenance reminder | Schedule service', icon: 'return' },
 ];
 
+const SYSTEM_STAGES = ['SMART WEBSITE', 'CONVERSATIONAL CONCIERGE', 'CRM', 'SCHEDULING', 'AUTOMATION', 'REPUTATION', 'NURTURE / REACTIVATION'];
+
+const StageVisual = ({ stage }) => {
+  if (stage.icon === 'web') return <div className="fd-website-fragment"><span className="fd-browser-top">yourbusiness.com</span><strong>REQUEST<br />SERVICE <ArrowRight size={14} /></strong></div>;
+  if (stage.icon === 'chat') return <div className="fd-chat-scene"><MessageCircle size={20} /><span>"My AC is not cooling."</span><b>I can help you get a service request started.</b></div>;
+  if (stage.icon === 'person') return <div className="fd-customer-note"><span className="fd-avatar">MR</span><div><strong>MARCUS R.</strong><span>AC REPAIR | CHESAPEAKE</span><small>NEW REQUEST</small></div></div>;
+  if (stage.icon === 'calendar') return <div className="fd-calendar"><CalendarDays size={20} /><strong>TOMORROW<br /><em>10:30 AM</em></strong><span>AC SERVICE REQUESTED <Check size={13} /></span></div>;
+  if (stage.icon === 'image') return <div className="fd-service-image"><span>TECHNICIAN + HOMEOWNER</span><small>Service experience</small></div>;
+  if (stage.icon === 'review') return <div className="fd-review-phone"><span>SERVICE COMPLETE ✓</span><p>Thanks for choosing us today.<br />We would appreciate your feedback.</p><b>LEAVE A REVIEW <ArrowRight size={12} /></b></div>;
+  return <div className="fd-return-note"><RefreshCw size={22} /><span>3 MONTHS LATER</span><strong>Seasonal maintenance reminder</strong><b>SCHEDULE SERVICE <ArrowRight size={12} /></b></div>;
+};
+
 export const SystemFrontDoor = () => {
-  const [activeCapability, setActiveCapability] = useState(OUTCOME_CAPABILITIES[0]);
+  const [activeStage, setActiveStage] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setActiveStage((current) => (current + 1) % JOURNEY_STAGES.length), 4200);
+    return () => clearInterval(timer);
+  }, []);
+
+  const stage = JOURNEY_STAGES[activeStage];
+  const advanceStage = (offset) => setActiveStage((activeStage + JOURNEY_STAGES.length + offset) % JOURNEY_STAGES.length);
 
   return (
     <div className="frontdoor-experience">
       <div className="frontdoor-header">
-        <span className="home-eyebrow">
-          <span className="eyebrow-rule" /> THE SMART WEBSITE SYSTEM™
-        </span>
-        <h2 className="frontdoor-headline">
-          THE WEBSITE IS ONLY<br />
-          <em className="gold-accent">THE FRONT DOOR.</em>
-        </h2>
-        <div className="frontdoor-distinction">
-          <div className="distinction-card website-card">
-            <span className="distinction-badge">CUSTOMER FRONT DOOR</span>
-            <h3>SMART WEBSITE™</h3>
-            <p>Customer-facing digital experience designed to command trust, showcase capabilities, and drive service requests.</p>
-          </div>
-          <div className="distinction-divider">
-            <ArrowRight size={20} className="divider-arrow" />
-          </div>
-          <div className="distinction-card system-card">
-            <span className="distinction-badge gold">BUSINESS OUTCOME SYSTEM</span>
-            <h3>SMART WEBSITE SYSTEM™</h3>
-            <p>Connected business ecosystem behind the front door that powers communication, follow-up, and customer retention.</p>
-          </div>
-        </div>
+        <span className="home-eyebrow"><span className="eyebrow-rule" /> THE SMART WEBSITE SYSTEM™</span>
+        <h2 className="frontdoor-headline">YOUR WEBSITE IS THE FRONT DOOR.<br /><em className="gold-accent">WATCH WHAT HAPPENS NEXT.</em></h2>
+        <p className="fd-intro">A customer sees a helpful website. Then a connected relationship begins.</p>
       </div>
 
-      {/* Interactive Connected Ecosystem Visualization */}
-      <div className="frontdoor-ecosystem-stage">
-        <div className="ecosystem-layout">
-          {/* Central Smart Website Front Door Node */}
-          <div className="central-frontdoor-node">
-            <div className="node-content">
-              <div className="node-icon-wrap">
-                <Globe size={24} />
-              </div>
-              <span className="node-tag">FRONT DOOR</span>
-              <strong className="node-title">SMART WEBSITE™</strong>
-              <span className="node-url">yourbusiness.com</span>
-            </div>
-            <div className="frontdoor-badge">BUSINESS OUTCOME ENGINE</div>
-          </div>
-
-          {/* Connected Pathways Grid */}
-          <div className="connected-capabilities-grid">
-            <div className="grid-header">
-              <span className="grid-title">CONNECTED BUSINESS OUTCOMES</span>
-              <span className="grid-subtext">Click any business outcome to trace active system integration</span>
-            </div>
-
-            <div className="capabilities-pills-wrap">
-              {OUTCOME_CAPABILITIES.map((cap) => {
-                const Icon = cap.icon;
-                const isSelected = activeCapability.id === cap.id;
-                return (
-                  <button
-                    key={cap.id}
-                    type="button"
-                    className={`capability-pill ${isSelected ? 'is-selected' : ''}`}
-                    onClick={() => setActiveCapability(cap)}
-                  >
-                    <Icon size={14} className="pill-icon" />
-                    <span>{cap.outcome}</span>
-                    {isSelected && <CheckCircle2 size={12} className="check-icon" />}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Active Outcome Detail Card */}
-            <div className="active-capability-detail">
-              <div className="detail-header">
-                <div className="detail-icon-wrap">
-                  {React.createElement(activeCapability.icon, { size: 18 })}
-                </div>
-                <div className="detail-title-wrap">
-                  <span className="category-tag">{activeCapability.category} • {activeCapability.tech}</span>
-                  <h4>{activeCapability.outcome}</h4>
-                </div>
-              </div>
-              <p className="detail-description">{activeCapability.description}</p>
-              <div className="detail-connection-path">
-                <span className="path-label">SYSTEM CONNECTION:</span>
-                <span className="path-step">SMART WEBSITE™ FRONT DOOR</span>
-                <ArrowRight size={12} />
-                <span className="path-step gold">{activeCapability.outcome}</span>
-                <ArrowRight size={12} />
-                <span className="path-step">REAL BUSINESS RESULT</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="fd-journey" aria-label="Customer relationship journey">
+        <svg className="fd-gold-path" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true"><path d="M 20 48 C 170 10, 260 76, 390 42 S 610 18, 730 48 S 875 72, 980 34" /><path className="fd-gold-progress" d="M 20 48 C 170 10, 260 76, 390 42 S 610 18, 730 48 S 875 72, 980 34" style={{ strokeDashoffset: `${(JOURNEY_STAGES.length - 1 - activeStage) * 158}` }} /></svg>
+        <div className="fd-stage-rail">{JOURNEY_STAGES.map((journeyStage, index) => <button key={journeyStage.id} type="button" className={`fd-stage ${index === activeStage ? 'is-active' : ''} ${index < activeStage ? 'is-past' : ''}`} onClick={() => setActiveStage(index)}><span className="fd-stage-dot" /><span>{journeyStage.label}</span></button>)}</div>
+        <div className="fd-active-scene"><div className="fd-scene-copy"><span className="fd-scene-label">{stage.label}</span><h3>{stage.title}</h3><p>{stage.detail}</p><div className="fd-scene-controls"><button type="button" onClick={() => advanceStage(-1)} aria-label="Previous journey stage">←</button><span>{String(activeStage + 1).padStart(2, '0')} / {String(JOURNEY_STAGES.length).padStart(2, '0')}</span><button type="button" onClick={() => advanceStage(1)} aria-label="Next journey stage">→</button></div></div><StageVisual stage={stage} /></div>
       </div>
 
-      <div className="frontdoor-footer-note">
-        <p>
-          12 Stone designs the system around your real operations and configures technology to power it.
-          Not every business needs every capability—we build around how your business actually operates.
-        </p>
-        <Button to="/customer-systems" variant="outline" icon={ArrowRight}>
-          EXPLORE CUSTOMER SYSTEMS
-        </Button>
-      </div>
+      <div className="fd-system-layer"><span>CONNECTED SYSTEM</span>{SYSTEM_STAGES.map((systemStage, index) => <React.Fragment key={systemStage}><b className={index <= activeStage ? 'is-active' : ''}>{systemStage}</b>{index < SYSTEM_STAGES.length - 1 && <i>→</i>}</React.Fragment>)}</div>
+      <div className="frontdoor-footer-note"><p>The customer experiences a simple next step. Behind it, the business keeps the relationship moving.</p><Button to="/customer-systems" variant="outline" icon={ArrowRight}>EXPLORE CUSTOMER SYSTEMS</Button></div>
     </div>
   );
 };
